@@ -1,12 +1,15 @@
 import numpy as np
 
-np.set_printoptions(precision=10)
+np. set_printoptions(suppress=True)
 
 
 class NeuronNetwork():
-    def __init__(self, alpha, hiddenSize):
+    def __init__(self, alpha=1, hiddenSize=4):
         self.alpha = alpha
         self.hiddenSize = hiddenSize
+
+        self._synapse_0 = 2 * np.random.random((3, hiddenSize)) - 1
+        self._synapse_1 = 2 * np.random.random((hiddenSize, 1)) - 1
 
     def sigmoid(self, x):
         return 1 / (1 + np.exp(-x))
@@ -14,19 +17,33 @@ class NeuronNetwork():
     def sigmoid_derivative(self, x):
         return x*(1-x)
 
+    def feedForward(self):
+        self.layer_0 = train_input
+        self.layer_1 = self.sigmoid(np.dot(self.layer_0, self._synapse_0))
+        self.layer_2 = self.sigmoid(np.dot(self.layer_1, self._synapse_1))
 
-alpha = 10
-hiddenSize = 32
+    def backpropogation(self):
+        self.layer_2_error = self.layer_2 - self.train_output
+        self.layer_2_delta = self.layer_2_error * \
+            self.sigmoid_derivative(self.layer_2)
+        self.layer_1_error = self.layer_2_delta.dot(self._synapse_1.T)
+        self.layer_1_delta = self.layer_1_error * \
+            self.sigmoid_derivative(self.layer_1)
 
-net = NeuronNetwork(10, 16)
+        self._synapse_1 -= self.alpha * \
+            (self.layer_1.T.dot(self.layer_2_delta))
+        self._synapse_0 -= self.alpha * \
+            (self.layer_0.T.dot(self.layer_1_delta))
 
+    def train(self, input, output, iterations):
+        self.train_input = input
+        self.train_output = output
 
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
+        for _ in range(iterations):
+            self.feedForward()
+            self.backpropogation()
 
-
-def sigmoid_derivative(x):
-    return x*(1-x)
+        print("Result:\n", self.layer_2)
 
 
 train_input = np.array([[0, 0, 1],
@@ -39,24 +56,5 @@ train_output = np.array([[0],
                          [1],
                          [0]])
 
-
-np.random.seed(1)
-
-synapse_0 = 2 * np.random.random((3, hiddenSize)) - 1
-synapse_1 = 2 * np.random.random((hiddenSize, 1)) - 1
-
-for j in range(100000):
-
-    layer_0 = train_input
-    layer_1 = sigmoid(np.dot(layer_0, synapse_0))
-    layer_2 = sigmoid(np.dot(layer_1, synapse_1))
-
-    layer_2_error = layer_2 - train_output
-    layer_2_delta = layer_2_error * sigmoid_derivative(layer_2)
-    layer_1_error = layer_2_delta.dot(synapse_1.T)
-    layer_1_delta = layer_1_error * sigmoid_derivative(layer_1)
-
-    synapse_1 -= alpha * (layer_1.T.dot(layer_2_delta))
-    synapse_0 -= alpha * (layer_0.T.dot(layer_1_delta))
-
-print(layer_2)
+net = NeuronNetwork(10, 32)
+net.train(train_input, train_output, 100000)
