@@ -18,7 +18,7 @@ class NeuronNetwork():
         return x*(1-x)
 
     def feedForward(self):
-        self.layer_0 = train_input
+        self.layer_0 = self.train_input
         self.layer_1 = self.sigmoid(np.dot(self.layer_0, self._synapse_0))
         self.layer_2 = self.sigmoid(np.dot(self.layer_1, self._synapse_1))
 
@@ -35,7 +35,7 @@ class NeuronNetwork():
         self._synapse_0 -= self.alpha * \
             (self.layer_0.T.dot(self.layer_1_delta))
 
-    def train(self, input, output, iterations):
+    def train(self, input, output, iterations, backpr=True):
         self.train_input = input
         self.train_output = output
 
@@ -43,7 +43,8 @@ class NeuronNetwork():
             if (i % 100 == 0):
                 print(i/iterations*100, "%")
             self.feedForward()
-            self.backpropogation()
+            if (backpr == True):
+                self.backpropogation()
 
         print("Result:\n", self.layer_2)
 
