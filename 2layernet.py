@@ -1,6 +1,6 @@
 import numpy as np
 
-np. set_printoptions(suppress=True)
+np.set_printoptions(suppress=True)
 
 
 class NeuronNetwork():
@@ -39,7 +39,9 @@ class NeuronNetwork():
         self.train_input = input
         self.train_output = output
 
-        for _ in range(iterations):
+        for i in range(iterations):
+            if (i % 100 == 0):
+                print(i/iterations*100, "%")
             self.feedForward()
             self.backpropogation()
 
