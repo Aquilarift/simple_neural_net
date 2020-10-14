@@ -33,8 +33,6 @@ class NeuralNetwork():
             self.sigmoid_derivative(self.layer_1)
 
         self.layer_1 = np.array([self.layer_1])
-        np.reshape(self.layer_1, (16, 1))
-
         self.layer_0 = np.array([self.layer_0])
 
         self._synapse_1 -= self.alpha * \
