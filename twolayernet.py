@@ -3,7 +3,7 @@ import numpy as np
 np.set_printoptions(suppress=True)
 
 
-class NeuronNetwork():
+class NeuralNetwork():
     def __init__(self, inSize=3, hiddenSize=4, outSize=1, alpha=1):
         self.alpha = alpha
         self.hiddenSize = hiddenSize
@@ -42,7 +42,7 @@ class NeuronNetwork():
         self.train_output = output
 
         for i in range(iterations):
-            if (i % 100 == 0):
+            if (i % 1000 == 0):
                 print(i/iterations*100, "%")
             self.feedforward()
             if (backpr == True):
@@ -51,19 +51,20 @@ class NeuronNetwork():
         print("Result:\n", self.layer_2)
 
 
-train_input = np.array([[0, 0, 1],
-                        [0, 1, 1],
-                        [1, 0, 1],
-                        [1, 1, 1],
-                        [0, 0, 0]])
+if __name__ == "__main__":
+    train_input = np.array([[0, 0, 1],
+                            [0, 1, 1],
+                            [1, 0, 1],
+                            [1, 1, 1],
+                            [0, 0, 0]])
 
-train_output = np.array([[0, 1],
-                         [1, 0],
-                         [1, 0],
-                         [0, 1],
-                         [0, 0]])
+    train_output = np.array([[0, 1],
+                             [1, 0],
+                             [1, 0],
+                             [0, 1],
+                             [0, 0]])
 
-net = NeuronNetwork(3, 16, 2, 10)
-net.train(train_input, train_output, 1000000)
+    net = NeuralNetwork(3, 16, 2, 10)
+    net.train(train_input, train_output, 1000000)
 
-net.train(np.array([[1, 1, 0]]), np.array([[0, 0]]), 1, False)
+    net.train(np.array([[1, 1, 0]]), np.array([[0, 0]]), 1, False)
