@@ -4,12 +4,14 @@ np.set_printoptions(suppress=True)
 
 
 class NeuronNetwork():
-    def __init__(self, alpha=1, hiddenSize=4):
+    def __init__(self, inSize=3, hiddenSize=4, outSize=1, alpha=1):
         self.alpha = alpha
         self.hiddenSize = hiddenSize
+        self.insize = inSize
+        self.outsize = outSize
 
-        self._synapse_0 = 2 * np.random.random((3, hiddenSize)) - 1
-        self._synapse_1 = 2 * np.random.random((hiddenSize, 1)) - 1
+        self._synapse_0 = 2 * np.random.random((self.insize, hiddenSize)) - 1
+        self._synapse_1 = 2 * np.random.random((hiddenSize, self.outsize)) - 1
 
     def sigmoid(self, x):
         return 1 / (1 + np.exp(-x))
@@ -17,7 +19,7 @@ class NeuronNetwork():
     def sigmoid_derivative(self, x):
         return x*(1-x)
 
-    def feedForward(self):
+    def feedforward(self):
         self.layer_0 = self.train_input
         self.layer_1 = self.sigmoid(np.dot(self.layer_0, self._synapse_0))
         self.layer_2 = self.sigmoid(np.dot(self.layer_1, self._synapse_1))
@@ -42,7 +44,7 @@ class NeuronNetwork():
         for i in range(iterations):
             if (i % 100 == 0):
                 print(i/iterations*100, "%")
-            self.feedForward()
+            self.feedforward()
             if (backpr == True):
                 self.backpropogation()
 
@@ -52,12 +54,16 @@ class NeuronNetwork():
 train_input = np.array([[0, 0, 1],
                         [0, 1, 1],
                         [1, 0, 1],
-                        [1, 1, 1]])
+                        [1, 1, 1],
+                        [0, 0, 0]])
 
-train_output = np.array([[0],
-                         [1],
-                         [1],
-                         [0]])
+train_output = np.array([[0, 1],
+                         [1, 0],
+                         [1, 0],
+                         [0, 1],
+                         [0, 0]])
 
-net = NeuronNetwork(10, 32)
-net.train(train_input, train_output, 100000)
+net = NeuronNetwork(3, 16, 2, 10)
+net.train(train_input, train_output, 1000000)
+
+net.train(np.array([[1, 1, 0]]), np.array([[0, 0]]), 1, False)
