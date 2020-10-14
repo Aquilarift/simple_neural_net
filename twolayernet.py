@@ -42,7 +42,7 @@ class NeuralNetwork():
         self.train_output = output
 
         for i in range(iterations):
-            if (i % 1000 == 0):
+            if (i % 100 == 0):
                 print(i/iterations*100, "%")
             self.feedforward()
             if (backpr == True):
