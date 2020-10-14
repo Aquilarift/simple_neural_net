@@ -44,8 +44,17 @@ net.train(train_input, train_output, 100000)
 
 net.train(np.array([[1, 1, 0]]), np.array([[0, 0]]), 1, False)'''
 
-sr, test = read("test.wav", True)
-print(test)
+sr, test = read("test.mp3", True)
+# print(test)
 
-net = NeuralNetwork(2, 4, 1, 10)
-net.train(test, np.array([[1]]), 2)
+test = test.reshape(-1, 2)[:, 1:].flatten()
+test = test.reshape(-1, 2)[:, 1:].flatten()
+
+np.reshape(test, [4037184, 1])
+
+# print(test)
+
+net = NeuralNetwork(4037184, 16, 1, 10)
+net.train(test, np.array([[1]]), 100)
+
+write("out.mp3", sr, test, True)

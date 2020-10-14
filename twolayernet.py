@@ -32,6 +32,11 @@ class NeuralNetwork():
         self.layer_1_delta = self.layer_1_error * \
             self.sigmoid_derivative(self.layer_1)
 
+        self.layer_1 = np.array([self.layer_1])
+        np.reshape(self.layer_1, (16, 1))
+
+        self.layer_0 = np.array([self.layer_0])
+
         self._synapse_1 -= self.alpha * \
             (self.layer_1.T.dot(self.layer_2_delta))
         self._synapse_0 -= self.alpha * \
@@ -42,7 +47,7 @@ class NeuralNetwork():
         self.train_output = output
 
         for i in range(iterations):
-            if (i % 100 == 0):
+            if (i % 1 == 0):
                 print(i/iterations*100, "%")
             self.feedforward()
             if (backpr == True):
@@ -65,6 +70,6 @@ if __name__ == "__main__":
                              [0, 0]])
 
     net = NeuralNetwork(3, 16, 2, 10)
-    net.train(train_input, train_output, 1000000)
+    net.train(train_input, train_output, 100000)
 
     net.train(np.array([[1, 1, 0]]), np.array([[0, 0]]), 1, False)
