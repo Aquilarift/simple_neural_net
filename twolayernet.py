@@ -17,7 +17,7 @@ class NeuralNetwork():
         return 1 / (1 + np.exp(-x))
 
     def sigmoid_derivative(self, x):
-        return x*(1-x)
+        return x * (1 - x)
 
     def feedforward(self):
         self.layer_0 = self.train_input
@@ -32,8 +32,8 @@ class NeuralNetwork():
         self.layer_1_delta = self.layer_1_error * \
             self.sigmoid_derivative(self.layer_1)
 
-        self.layer_1 = np.array([self.layer_1])
-        self.layer_0 = np.array([self.layer_0])
+        #self.layer_1 = np.array([self.layer_1])
+        #self.layer_0 = np.array([self.layer_0])
 
         self._synapse_1 -= self.alpha * \
             (self.layer_1.T.dot(self.layer_2_delta))
