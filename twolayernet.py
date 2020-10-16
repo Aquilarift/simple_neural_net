@@ -45,8 +45,8 @@ class NeuralNetwork():
         self.train_output = output
 
         for i in range(iterations):
-            if (i % 1 == 0):
-                print(i/iterations*100, "%")
+            if (i % 1000 == 0):
+                print(i / iterations * 100, "%")
             self.feedforward()
             if (backpr == True):
                 self.backpropogation()
