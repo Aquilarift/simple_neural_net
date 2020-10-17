@@ -10,8 +10,10 @@ class NeuralNetwork():
         self.insize = inSize
         self.outsize = outSize
 
-        self._synapse_0 = 2 * np.random.random((self.insize, hiddenSize)) - 1
-        self._synapse_1 = 2 * np.random.random((hiddenSize, self.outsize)) - 1
+        self._synapse_0 = 2 * \
+            np.random.random((self.insize, self.hiddenSize)) - 1
+        self._synapse_1 = 2 * \
+            np.random.random((self.hiddenSize, self.outsize)) - 1
 
     def sigmoid(self, x):
         return 1 / (1 + np.exp(-x))
@@ -32,24 +34,29 @@ class NeuralNetwork():
         self.layer_1_delta = self.layer_1_error * \
             self.sigmoid_derivative(self.layer_1)
 
-        #self.layer_1 = np.array([self.layer_1])
-        #self.layer_0 = np.array([self.layer_0])
-
         self._synapse_1 -= self.alpha * \
             (self.layer_1.T.dot(self.layer_2_delta))
         self._synapse_0 -= self.alpha * \
             (self.layer_0.T.dot(self.layer_1_delta))
 
-    def train(self, input, output, iterations, backpr=True):
+    def train(self, input, output, iterations):
         self.train_input = input
         self.train_output = output
 
         for i in range(iterations):
             if (i % 1000 == 0):
                 print(i / iterations * 100, "%")
+
             self.feedforward()
-            if (backpr == True):
-                self.backpropogation()
+            self.backpropogation()
+
+        print("Result:\n", self.layer_2)
+
+    def recognize(self, input, output):
+        self.train_input = input
+        self.train_output = output
+
+        self.feedforward()
 
         print("Result:\n", self.layer_2)
 
