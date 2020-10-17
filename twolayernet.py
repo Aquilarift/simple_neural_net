@@ -1,7 +1,7 @@
 import numpy as np
 
-np.set_printoptions(suppress=True)
-np.random.seed(1)
+# np.set_printoptions(suppress=True)
+# np.random.seed(1)
 
 
 class NeuralNetwork():
