@@ -1,6 +1,7 @@
 import numpy as np
 
-# np.set_printoptions(suppress=True)
+np.set_printoptions(suppress=True)
+np.random.seed(1)
 
 
 class NeuralNetwork():
@@ -30,6 +31,7 @@ class NeuralNetwork():
         self.layer_2_error = self.layer_2 - self.train_output
         self.layer_2_delta = self.layer_2_error * \
             self.sigmoid_derivative(self.layer_2)
+
         self.layer_1_error = self.layer_2_delta.dot(self._synapse_1.T)
         self.layer_1_delta = self.layer_1_error * \
             self.sigmoid_derivative(self.layer_1)
@@ -52,9 +54,8 @@ class NeuralNetwork():
 
         print("Result:\n", self.layer_2)
 
-    def recognize(self, input, output):
+    def recognize(self, input):
         self.train_input = input
-        self.train_output = output
 
         self.feedforward()
 
@@ -77,4 +78,4 @@ if __name__ == "__main__":
     net = NeuralNetwork(3, 16, 2, 10)
     net.train(train_input, train_output, 100000)
 
-    net.recognize(np.array([[1, 1, 0]]), np.array([[0, 0]]))
+    net.recognize(np.array([[1, 1, 0]]))
