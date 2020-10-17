@@ -1,6 +1,6 @@
 import numpy as np
 
-# np.set_printoptions(suppress=True)
+np.set_printoptions(suppress=True)
 # np.random.seed(1)
 
 
