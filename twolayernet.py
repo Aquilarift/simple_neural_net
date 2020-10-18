@@ -1,6 +1,6 @@
 import numpy as np
 
-# np.set_printoptions(suppress=True)
+np.set_printoptions(suppress=True)
 # np.random.seed(1)
 
 
@@ -90,8 +90,7 @@ if __name__ == "__main__":
                              [0, 1],
                              [0, 0]])
 
-    # net = NeuralNetwork(3, 16, 2, 10)
-    net = NeuralNetwork(3, 2, [32, 16])
+    net = NeuralNetwork(3, 2, [32, 8])
     net.train(train_input, train_output, 100000, 10)
 
     net.recognize(np.array([[1, 1, 0]]))
