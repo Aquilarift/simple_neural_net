@@ -72,7 +72,6 @@ class NeuralNetwork():
 
     def recognize(self, input):
         self.train_input = input
-
         self.feedforward()
 
         print("Result:\n", self.layers[self.hiddensize+1])
