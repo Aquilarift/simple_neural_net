@@ -1,3 +1,4 @@
-**Simple neural network in python.***
-___Backpropagation algorithm.
-Flexible.
+***Simple neural network in python.***
+
+_Backpropagation algorithm._
+_Flexible._
