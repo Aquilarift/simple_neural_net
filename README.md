@@ -1,3 +1,4 @@
-# two-layer-simple-neural-network
-**Simple 2-layer naural network;
-Backpropagation algorithm.**
+***Simple neural network in python.***
+
+_Backpropagation algorithm._
+_Flexible._
