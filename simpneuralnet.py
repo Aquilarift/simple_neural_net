@@ -1,7 +1,7 @@
 import numpy as np
 
 np.set_printoptions(suppress=True)
-# np.random.seed(1)
+np.random.seed(1)
 
 
 class NeuralNetwork():
@@ -19,10 +19,10 @@ class NeuralNetwork():
         self.outsize = outSize
 
         self._synapses = [None] * (self.hiddensize+1)
-        self.layers = [None] * (len(self._synapses)+1)
+        self.layers = [None] * (self.hiddensize+2)
 
         self.layers_err = [None] * (self.hiddensize+1)
-        self.layers_delta = [None] * (len(self.layers_err))
+        self.layers_delta = [None] * (self.hiddensize+1)
 
         self._synapses[0] = 2 * \
             np.random.random((self.insize, self.hidden[0])) - 1
@@ -36,7 +36,7 @@ class NeuralNetwork():
 
     def feedforward(self):
         self.layers[0] = self.train_input
-        for i in range(1, len(self.layers)):
+        for i in range(1, self.hiddensize+2):
             self.layers[i] = self.sigmoid(
                 np.dot(self.layers[i-1], self._synapses[i-1]))
 
@@ -90,7 +90,10 @@ if __name__ == "__main__":
                              [0, 1],
                              [0, 0]])
 
-    net = NeuralNetwork(3, 2, [32, 8])
-    net.train(train_input, train_output, 100000, 10)
+    net = NeuralNetwork(3, 2, [12, 8])
+
+    net.train(train_input, train_output, 1000000, 10)
 
     net.recognize(np.array([[1, 1, 0]]))
+    net.recognize(np.array([[0, 1, 0]]))
+    net.recognize(np.array([[1, 1, 1]]))
